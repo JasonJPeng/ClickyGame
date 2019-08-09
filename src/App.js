@@ -73,8 +73,11 @@ class App extends React.Component {
   
   render () {
   return (
-    <div>
-      {this.state.score}  {this.state.highestScore}
+    <div id="game">
+      <div id="score">
+      <p>Current Score: {this.state.score} </p> 
+      <p>Highest Score: {this.state.highestScore} </p>
+      </div>
       {this.state.faces.map(e => {
         return <FaceCard
           key = {e.id}
