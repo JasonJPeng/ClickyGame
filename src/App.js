@@ -4,10 +4,25 @@ import FaceCard from "./components/FaceCard";
 import faces from "./faces.json";
 import "./App.css";
 
-class App extends React.Component {
+let maxNum = 20;
 
+function shuffle(array, max){
+  let out = [];
+  
+  while ( array.length > 0 && out.length < max) {
+    let j = Math.floor(Math.random() * array.length);
+    out.push(array[j]);
+    array = array.filter((x, ind)=>{if(ind !== j) return x})
+  }
+  return out;
+}
+
+let newFaces = shuffle(faces, maxNum);
+
+class App extends React.Component {
+  
   state = {
-    faces: faces,
+    faces: newFaces,
     highestScore: 0,
     score: 0,
     clickedIds: []
@@ -21,27 +36,29 @@ class App extends React.Component {
   //   }
   // }  
 
-shuffle = (array) => {
-  let out = [];
-  while (array.length > 0) {
-    let j = Math.floor(Math.random() * array.length);
-    out.push(array[j]);
-    array = array.filter((x, ind)=>{if(ind !== j) return x})
-  }
-  return out;
-}
+// shuffle = (array) => {
+//   let out = [];
+//   while (array.length > 0) {
+//     let j = Math.floor(Math.random() * array.length);
+//     out.push(array[j]);
+//     array = array.filter((x, ind)=>{if(ind !== j) return x})
+//   }
+//   return out;
+// }
 
   clickMe = (event) => {
     let newArray = [], newScore, newHigh;
     let newClicked = this.state.clickedIds;
     const { target: { id } } = event;
     console.log("====>   " + id)
-    newArray = this.shuffle(this.state.faces)
+    
     if (this.state.clickedIds.indexOf(id) < 0) {
+      newArray = shuffle(this.state.faces, maxNum)
        newScore = this.state.score +1;
        newHigh = newScore > this.state.highestScore ? newScore : this.state.highestScore;
        newClicked.push(id)
     } else {
+      newArray = shuffle(faces, maxNum)
        newScore = 0;
        newHigh = this.state.highestScore;
        newClicked = [];
@@ -62,10 +79,10 @@ shuffle = (array) => {
         return <FaceCard
           key = {e.id}
           id = {e.id}
-          name={e.name}
+          
           image={e.image}
-          occupation={e.occupation}
-          location={e.location}
+          // occupation={e.occupation}
+          // location={e.location}
           clickMe = {this.clickMe}
           />
       })}
