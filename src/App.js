@@ -27,36 +27,18 @@ class App extends React.Component {
     score: 0,
     clickedIds: []
   }
-  // shuffle = (array) => {
-  //   for (let i = array.length - 1; i > 0; i--) {
-  //     let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
-  //     [array[i], array[j]] = [array[j], array[i]];
-  //     return array;
-  //      // swap elements
-  //   }
-  // }  
-
-// shuffle = (array) => {
-//   let out = [];
-//   while (array.length > 0) {
-//     let j = Math.floor(Math.random() * array.length);
-//     out.push(array[j]);
-//     array = array.filter((x, ind)=>{if(ind !== j) return x})
-//   }
-//   return out;
-// }
-
+ 
   clickMe = (event) => {
     let newArray = [], newScore, newHigh;
     let newClicked = this.state.clickedIds;
-    const { target: { id } } = event;
-    console.log("====>   " + id)
+    let theId = event.target.id;
+    console.log("====>   " + theId)
     
-    if (this.state.clickedIds.indexOf(id) < 0) {
+    if (this.state.clickedIds.indexOf(theId) < 0) {
       newArray = shuffle(this.state.faces, maxNum)
        newScore = this.state.score +1;
        newHigh = newScore > this.state.highestScore ? newScore : this.state.highestScore;
-       newClicked.push(id)
+       newClicked.push(theId)
     } else {
       newArray = shuffle(faces, maxNum)
        newScore = 0;
